@@ -487,7 +487,8 @@ func (v *VoiceConnection) websocket(ctx context.Context, endpoint string, token 
 
 				// 4015 indicates that voice server crashed so we should reconnect.
 				// Other code is our bad, should never happen, we stop reconnecting to avoid loop.
-				if websocket.IsUnexpectedCloseError(err, 4015, 4022) {
+                // 1006, 4006
+				if websocket.IsUnexpectedCloseError(err, 4015, 4022, 1006, 4006) {
 					err := fmt.Errorf("voice websocket closed, %w", err)
 					v.failure(err)
 					return
